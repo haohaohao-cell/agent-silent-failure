@@ -2,7 +2,24 @@
 
 > 测的不是 agent 能不能做对，而是**它做错的时候知不知道自己错了**。
 
-**当前状态**：65 个测试全绿，四批对照实验已跑完（共约 200 次真实模型调用）。
+**当前状态**：65 个测试全绿，六组对照实验已跑完（约 250 次真实模型调用）。
+
+---
+
+## English summary
+
+Agents rarely crash. They confidently report "done" while the database says otherwise.
+This repo measures that gap: **does an agent know its own action failed?**
+
+- **Harness** — a fake business world (expense approval, 6 tools, real side effects), 8 fault classes injected at the tool boundary, 6 business invariants, and a 2×2 matrix of *what the agent claims* × *what actually happened*.
+- **Finding** — one read-only status tool took human hand-offs from **9–10/10 to 0/10** across 3 frameworks and 2 models (p < 0.0001). A stronger reasoning model changed nothing (p = 1.00). Changing orchestration changed nothing (p = 1.00).
+- **Counter-finding** — framework-level blanket retries make it *worse*: 10/10 double payments, because the model never sees the failure.
+- **Repro** — `pip install -r requirements.txt && python -m pytest` (65 tests). Six experiments in `scripts/`, raw data in `runs/exp_*.json`.
+- **Write-up** — [REPORT.md](REPORT.md) (narrative) · [FINDINGS.md](FINDINGS.md) (raw logs + methodology) · [deck/](deck/) (14-slide deck).
+
+> One line: agents don't lack intelligence — they lack eyes.
+
+---
 
 ## 先读这个
 
@@ -20,7 +37,9 @@
 ## 安装
 
 ```bash
-python -m venv .venv && .venv\Scripts\activate     # Windows
+python -m venv .venv
+# Windows:      .venv\Scripts\activate
+# macOS/Linux:  source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
