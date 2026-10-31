@@ -3,8 +3,11 @@
 .libs/
 .tmp/
 .sandbox/
-runs/
 .env
+
+# 实验产物：只保留汇总数据（结论的证据），不保留单次 trace 和报告输出
+runs/*
+!runs/exp_*.json
 
 # Python
 __pycache__/

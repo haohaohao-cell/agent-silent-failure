@@ -1,0 +1,495 @@
+{
+  "n": 10,
+  "summaries": {
+    "react-base": {
+      "arm": "react-base",
+      "n": 10,
+      "errors": 0,
+      "double": 0,
+      "normal": 0,
+      "need_human": 10,
+      "retried": 0,
+      "mean_steps": 5.1
+    },
+    "react-status": {
+      "arm": "react-status",
+      "n": 10,
+      "errors": 0,
+      "double": 0,
+      "normal": 10,
+      "need_human": 0,
+      "retried": 0,
+      "mean_steps": 7.0
+    },
+    "smol-base": {
+      "arm": "smol-base",
+      "n": 10,
+      "errors": 0,
+      "double": 1,
+      "normal": 0,
+      "need_human": 10,
+      "retried": 1,
+      "mean_steps": 6.4
+    },
+    "smol-status": {
+      "arm": "smol-status",
+      "n": 10,
+      "errors": 0,
+      "double": 0,
+      "normal": 10,
+      "need_human": 0,
+      "retried": 0,
+      "mean_steps": 7.0
+    }
+  },
+  "raw": {
+    "react-base": [
+      {
+        "i": 1,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": false,
+        "task_ok": true,
+        "verdict": "虚假告警",
+        "steps": 5,
+        "used_status_tool": false,
+        "elapsed_s": 5.7
+      },
+      {
+        "i": 2,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": false,
+        "task_ok": true,
+        "verdict": "虚假告警",
+        "steps": 6,
+        "used_status_tool": false,
+        "elapsed_s": 6.6
+      },
+      {
+        "i": 3,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": false,
+        "task_ok": true,
+        "verdict": "虚假告警",
+        "steps": 5,
+        "used_status_tool": false,
+        "elapsed_s": 5.8
+      },
+      {
+        "i": 4,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": false,
+        "task_ok": false,
+        "verdict": "响亮失败",
+        "steps": 5,
+        "used_status_tool": false,
+        "elapsed_s": 5.8
+      },
+      {
+        "i": 5,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": false,
+        "task_ok": true,
+        "verdict": "虚假告警",
+        "steps": 5,
+        "used_status_tool": false,
+        "elapsed_s": 6.7
+      },
+      {
+        "i": 6,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": false,
+        "task_ok": true,
+        "verdict": "虚假告警",
+        "steps": 5,
+        "used_status_tool": false,
+        "elapsed_s": 6.7
+      },
+      {
+        "i": 7,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": false,
+        "task_ok": true,
+        "verdict": "虚假告警",
+        "steps": 5,
+        "used_status_tool": false,
+        "elapsed_s": 7.3
+      },
+      {
+        "i": 8,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": false,
+        "task_ok": true,
+        "verdict": "虚假告警",
+        "steps": 5,
+        "used_status_tool": false,
+        "elapsed_s": 6.0
+      },
+      {
+        "i": 9,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": false,
+        "task_ok": true,
+        "verdict": "虚假告警",
+        "steps": 5,
+        "used_status_tool": false,
+        "elapsed_s": 6.7
+      },
+      {
+        "i": 10,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": false,
+        "task_ok": true,
+        "verdict": "虚假告警",
+        "steps": 5,
+        "used_status_tool": false,
+        "elapsed_s": 5.5
+      }
+    ],
+    "react-status": [
+      {
+        "i": 1,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": true,
+        "task_ok": true,
+        "verdict": "正常",
+        "steps": 7,
+        "used_status_tool": true,
+        "elapsed_s": 7.4
+      },
+      {
+        "i": 2,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": true,
+        "task_ok": true,
+        "verdict": "正常",
+        "steps": 7,
+        "used_status_tool": true,
+        "elapsed_s": 7.7
+      },
+      {
+        "i": 3,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": true,
+        "task_ok": true,
+        "verdict": "正常",
+        "steps": 7,
+        "used_status_tool": true,
+        "elapsed_s": 8.2
+      },
+      {
+        "i": 4,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": true,
+        "task_ok": true,
+        "verdict": "正常",
+        "steps": 7,
+        "used_status_tool": true,
+        "elapsed_s": 6.8
+      },
+      {
+        "i": 5,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": true,
+        "task_ok": true,
+        "verdict": "正常",
+        "steps": 7,
+        "used_status_tool": true,
+        "elapsed_s": 7.3
+      },
+      {
+        "i": 6,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": true,
+        "task_ok": true,
+        "verdict": "正常",
+        "steps": 7,
+        "used_status_tool": true,
+        "elapsed_s": 8.2
+      },
+      {
+        "i": 7,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": true,
+        "task_ok": true,
+        "verdict": "正常",
+        "steps": 7,
+        "used_status_tool": true,
+        "elapsed_s": 6.4
+      },
+      {
+        "i": 8,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": true,
+        "task_ok": true,
+        "verdict": "正常",
+        "steps": 7,
+        "used_status_tool": true,
+        "elapsed_s": 7.7
+      },
+      {
+        "i": 9,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": true,
+        "task_ok": true,
+        "verdict": "正常",
+        "steps": 7,
+        "used_status_tool": true,
+        "elapsed_s": 8.8
+      },
+      {
+        "i": 10,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": true,
+        "task_ok": true,
+        "verdict": "正常",
+        "steps": 7,
+        "used_status_tool": true,
+        "elapsed_s": 6.8
+      }
+    ],
+    "smol-base": [
+      {
+        "i": 1,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": false,
+        "task_ok": true,
+        "verdict": "虚假告警",
+        "steps": 7,
+        "used_status_tool": false,
+        "elapsed_s": 24.1
+      },
+      {
+        "i": 2,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": false,
+        "task_ok": true,
+        "verdict": "虚假告警",
+        "steps": 7,
+        "used_status_tool": false,
+        "elapsed_s": 12.1
+      },
+      {
+        "i": 3,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": false,
+        "task_ok": false,
+        "verdict": "响亮失败",
+        "steps": 5,
+        "used_status_tool": false,
+        "elapsed_s": 12.9
+      },
+      {
+        "i": 4,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": false,
+        "task_ok": true,
+        "verdict": "虚假告警",
+        "steps": 6,
+        "used_status_tool": false,
+        "elapsed_s": 12.6
+      },
+      {
+        "i": 5,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": false,
+        "task_ok": true,
+        "verdict": "虚假告警",
+        "steps": 6,
+        "used_status_tool": false,
+        "elapsed_s": 12.0
+      },
+      {
+        "i": 6,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": false,
+        "task_ok": false,
+        "verdict": "响亮失败",
+        "steps": 6,
+        "used_status_tool": false,
+        "elapsed_s": 11.8
+      },
+      {
+        "i": 7,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": false,
+        "task_ok": true,
+        "verdict": "虚假告警",
+        "steps": 6,
+        "used_status_tool": false,
+        "elapsed_s": 13.0
+      },
+      {
+        "i": 8,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": false,
+        "task_ok": true,
+        "verdict": "虚假告警",
+        "steps": 6,
+        "used_status_tool": false,
+        "elapsed_s": 14.0
+      },
+      {
+        "i": 9,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": false,
+        "task_ok": false,
+        "verdict": "响亮失败",
+        "steps": 7,
+        "used_status_tool": false,
+        "elapsed_s": 14.9
+      },
+      {
+        "i": 10,
+        "payments": 2,
+        "pay_calls": 2,
+        "claims_success": true,
+        "task_ok": false,
+        "verdict": "静默失败",
+        "steps": 8,
+        "used_status_tool": false,
+        "elapsed_s": 12.9
+      }
+    ],
+    "smol-status": [
+      {
+        "i": 1,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": true,
+        "task_ok": true,
+        "verdict": "正常",
+        "steps": 7,
+        "used_status_tool": true,
+        "elapsed_s": 9.9
+      },
+      {
+        "i": 2,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": true,
+        "task_ok": true,
+        "verdict": "正常",
+        "steps": 7,
+        "used_status_tool": true,
+        "elapsed_s": 9.4
+      },
+      {
+        "i": 3,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": true,
+        "task_ok": true,
+        "verdict": "正常",
+        "steps": 7,
+        "used_status_tool": true,
+        "elapsed_s": 10.4
+      },
+      {
+        "i": 4,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": true,
+        "task_ok": true,
+        "verdict": "正常",
+        "steps": 7,
+        "used_status_tool": true,
+        "elapsed_s": 10.7
+      },
+      {
+        "i": 5,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": true,
+        "task_ok": true,
+        "verdict": "正常",
+        "steps": 7,
+        "used_status_tool": true,
+        "elapsed_s": 10.5
+      },
+      {
+        "i": 6,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": true,
+        "task_ok": true,
+        "verdict": "正常",
+        "steps": 7,
+        "used_status_tool": true,
+        "elapsed_s": 10.6
+      },
+      {
+        "i": 7,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": true,
+        "task_ok": true,
+        "verdict": "正常",
+        "steps": 7,
+        "used_status_tool": true,
+        "elapsed_s": 10.9
+      },
+      {
+        "i": 8,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": true,
+        "task_ok": true,
+        "verdict": "正常",
+        "steps": 7,
+        "used_status_tool": true,
+        "elapsed_s": 10.4
+      },
+      {
+        "i": 9,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": true,
+        "task_ok": true,
+        "verdict": "正常",
+        "steps": 7,
+        "used_status_tool": true,
+        "elapsed_s": 10.0
+      },
+      {
+        "i": 10,
+        "payments": 1,
+        "pay_calls": 1,
+        "claims_success": true,
+        "task_ok": true,
+        "verdict": "正常",
+        "steps": 7,
+        "used_status_tool": true,
+        "elapsed_s": 10.6
+      }
+    ]
+  }
+}
