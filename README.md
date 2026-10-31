@@ -6,6 +6,11 @@
 
 **当前状态**：65 个测试全绿，六组对照实验已跑完（约 250 次真实模型调用）。
 
+![一次真实运行：注入「服务端已执行、客户端超时」后，钱打了两遍，而 agent 自述完成](docs/media/silent-failure.png)
+
+*`python -m src.runner --fault 2` 的真实输出（确定性 agent，不调用 API，可直接复现）。
+钱付了两次、agent 说「已完成」、判定为静默失败。*
+
 ---
 
 ## English summary
