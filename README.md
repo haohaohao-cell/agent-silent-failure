@@ -27,6 +27,7 @@ This repo measures that gap: **does an agent know its own action failed?**
 |---|---|---|
 | **[REPORT.md](REPORT.md)** | 完整的实验叙事：一个被推翻三次的假设，和一个站得住的结论 | 10 分钟 |
 | [FINDINGS.md](FINDINGS.md) | 原始实验记录、统计检验、方法论复盘 | 查细节时看 |
+| [docs/article.md](docs/article.md) | 项目复盘：从一个被砍掉的选题，到六组实验和发布 | 15 分钟 |
 | 本文件 | 怎么跑、代码结构、怎么扩展 | 动手时看 |
 
 **一句话结论**：agent 停摆不是因为模型笨或框架差，而是**看不到自己动作的结果**。
