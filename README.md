@@ -48,20 +48,19 @@ pip install -r requirements.txt
 
 ## 快速开始
 
-```powershell
-# 用 3.12（3.14 上暂时没装 pytest）
-D:\python\python.exe -m pytest          # 65 passed
+```bash
+# 65 个测试
+python -m pytest
 
 # 不需要 API key 的演示
-D:\python\python.exe -m src.runner                      # 无故障基线 → 🟢
-D:\python\python.exe -m src.runner --fault 2            # 双打款 → 🔴 静默失败
-D:\python\python.exe -m src.runner --agent minimal --fault 2
+python -m src.runner                      # 无故障基线 → 🟢
+python -m src.runner --fault 2            # 双打款 → 🔴 静默失败
+python -m src.runner --agent minimal --fault 2
 
-# 真实模型（需要 .env 里的 key，且要把 .libs 加进 PYTHONPATH）
-$env:PYTHONPATH = "C:\Users\yu646\Desktop\agent项目\.libs"
-D:\python\python.exe -m src.runner --agent smolagents
-D:\python\python.exe -m src.runner --agent smolagents --scenario opaque_timeout
-D:\python\python.exe -m src.runner --agent smolagents --scenario opaque_timeout --status-tool
+# 真实模型（需要 .env 里的 key）
+python -m src.runner --agent smolagents
+python -m src.runner --agent smolagents --scenario opaque_timeout
+python -m src.runner --agent smolagents --scenario opaque_timeout --status-tool
 ```
 
 ## 命令行开关
@@ -70,7 +69,7 @@ D:\python\python.exe -m src.runner --agent smolagents --scenario opaque_timeout 
 |---|---|
 | `--fault N` | 注入第 N 类故障（1–8） |
 | `--scenario NAME` | 组合场景（目前有 `opaque_timeout`） |
-| `--agent` | `fake` / `minimal` / `smolagents` |
+| `--agent` | `fake` / `minimal`（脚本模型）/ `react` / `langgraph` / `smolagents` |
 | `--desc warned\|neutral` | **实验 A 的自变量**：pay_out 工具描述带不带警告 |
 | `--status-tool` | **实验 D 的自变量**：开放 `get_payment_status` 查询工具 |
 | `--idempotent` | **实验 E 的自变量**：pay_out 服务端幂等 |
@@ -78,19 +77,18 @@ D:\python\python.exe -m src.runner --agent smolagents --scenario opaque_timeout 
 
 ## 跑实验
 
-```powershell
-$env:PYTHONPATH = "C:\Users\yu646\Desktop\agent项目\.libs"
-D:\python\python.exe scripts\exp_e.py 10   # 幂等 vs 可观测性，4 臂 × 10
-D:\python\python.exe scripts\exp_b.py 10   # 跨模型：chat vs reasoner，4 臂 × 10
-D:\python\python.exe scripts\exp_c.py 10   # 跨框架：React vs smolagents
-D:\python\python.exe scripts\exp_g.py 10   # 跨框架：LangGraph 显式状态图
-D:\python\python.exe scripts\exp_h.py 10   # 框架层重试：默认 / 无差别 / +幂等
+```bash
+python scripts/exp_e.py 10   # 幂等 vs 可观测性，4 臂 × 10
+python scripts/exp_b.py 10   # 跨模型：chat vs reasoner，4 臂 × 10
+python scripts/exp_c.py 10   # 跨框架：React vs smolagents
+python scripts/exp_g.py 10   # 跨框架：LangGraph 显式状态图
+python scripts/exp_h.py 10   # 框架层重试：默认 / 无差别 / +幂等
 ```
 
 结果写到 `runs/exp_*.json`，分析见 [FINDINGS.md](FINDINGS.md)。
 
 > **注意**：所有实验都必须在 `temperature=0` 下跑。
-> `SmolagentsAgent` 与各真模型 agent 都已锁死；改模型时别绕过它（见 FINDINGS 第十二节）。
+> 现有的三个真模型实现都已锁定；新增模型实现时需保持同样设置（见 FINDINGS 第十二节）。
 
 ## 实验 H 单独说明
 
@@ -126,10 +124,14 @@ src/
     smolagents_agent.py  框架 #1：代码即行动
     langgraph_agent.py   框架 #2：显式状态图
 tests/
-  test_injector.py    元测试：证明注入真的发生了
-  test_judge.py       元测试：判定器抓得到，且不误报
-  test_e2e.py         端到端：双打款 = 静默失败
-  test_minimal_agent.py  循环本身在鼓励重试
+  test_injector.py          元测试：证明注入真的发生了
+  test_judge.py             元测试：判定抓得到，且不误报
+  test_matrix.py            2×2 判定的四种组合
+  test_claims.py            状态行协议与关键词兜底
+  test_e2e.py               端到端：双打款 = 静默失败
+  test_minimal_agent.py     手写循环：错误回传与终止条件
+  test_idempotency.py       幂等只防重复，不提供观测
+  test_smolagents_adapter.py  框架适配层接线
 ```
 
 ## 框架 #0 为什么重要
@@ -138,16 +140,16 @@ tests/
 
 它有两个作用：
 
-1. **它是基线。** smolagents / OpenAI SDK / LangGraph 都要和它比。没有基线，
-   "某框架 SFR 42%" 是没有参照的数字。
-2. **它让你看清循环本身。** 你之前没用过 agent 框架——读完这 60 行，
-   你就知道所有框架在底下干什么，剩下的只是包装差异。
+1. **它是基线。** 另外两个实现（smolagents、LangGraph）都要和它比。没有基线，
+   "某框架静默失败率 X%" 是没有参照的数字。
+2. **它让"循环"本身可见。** 只有 60 行，读完就能看清 agent 循环底下发生了什么，
+   其余的框架差异只是包装。
 
 关键在 `_invoke` 里的异常处理：工具抛错后，错误被**喂回给模型**，
-而不是让程序崩溃。这是所有框架的标准做法，也正是它让「重试」变成了模型的自发行为。
+而不是让程序崩溃。这是所有框架的标准做法，也正是它让「重试」成为模型的一个可选项。
 
-> **框架的设计本身，在鼓励 agent 出错后重试。**
-> 这是本项目要论证的核心机制之一。
+不过实测下来，模型很少真的重试——它更常选择停下来上报。
+真正会把失败变成重复执行的是**框架层重试**，见实验 H。
 
 ---
 
@@ -160,7 +162,7 @@ tests/
 | 3 | `raise` | 直接抛错 | 🟡 响亮失败 |
 | 4 | `bad_return` | 200 但 body 是错误码 | 🟡 响亮失败（KeyError） |
 | 5 | `bad_return` | 缺字段 | 🟡 响亮失败（KeyError） |
-| 6 | `bad_return` | 截断，只返回 1 条 | ⚠️ **漏检，见下** |
+| 6 | `bad_return` | 截断，只返回 1 条 | 🔴 **少付（曾漏检，已补）** |
 | 7 | `bad_return` | 陈旧缓存 | 🟢 本任务下无影响 |
 | 8 | `duplicate` | 一次调用两次副作用 | 🔴 **双打款** |
 
@@ -173,7 +175,7 @@ tests/
 
 ---
 
-## ✅ 已修复的盲区：类 6（截断）少付
+## 一个曾经漏检的盲区：类 6（截断）少付
 
 **这一条曾经漏检，现在已补上。**
 
@@ -184,7 +186,7 @@ tests/
 - `amount_bound` 只检查 `打款 ≤ 票据`，少付不算违规
 - `budget_guard` 只对账，账面 11200 = 10000 + 1200，是自洽的
 
-**这就是判定器的盲区。** 补法是加第 5 条不变量（已实现）：
+**这就是判定器的盲区。** 补法是加一条不变量（已实现）：
 
 ```python
 def check_amount_exact(world) -> CheckResult:
@@ -199,34 +201,37 @@ def check_amount_exact(world) -> CheckResult:
 判定：🔴 静默失败
 ```
 
-**仍然存在的边界**（写报告时应主动承认）：
+**仍然存在的边界**：
 该不变量假设本流程一律全额报销。若业务允许部分打款，它会变成误报来源。
 
-> 这件事写进 README 比藏起来值钱得多：**你在报告里主动披露了检测器的局限**，
-> 这比"我的系统全部抓到"可信一个量级。
+> 这类局限写在 README 里比藏起来有价值：主动披露检测器的边界，
+> 比声称"全部抓到"可信一个量级。
 
 ---
 
-## 你接下来的任务（D4 / D5）
+## 已知局限
 
-按优先级：
+- 只覆盖三种编排架构（自由循环 × JSON、自由循环 × 代码、显式状态图），
+  没有覆盖 handoff 多 agent 范式。
+- 只有报销审批一个业务场景，外部效度未知。
+- 判定依赖业务不变量，而不变量本身有构造性局限（见上一节）。
+- 每臂 n = 10；对 0/10 vs 10/10 这种量级足够，更细的差异测不出。
+- 即使 `temperature = 0`，MoE 路由仍带来残余随机性。
 
-1. **重写 `injector.py` 和 `judge.py`**。
-   现在这两份是我写的参考答案，你要能逐行讲出来，然后用自己的写法替代。
-   面试官问"你怎么保证故障真的发生了"，答案得是你的。
+## 可以继续做的地方
 
-2. **加第 9 类故障**。建议：`pay_out` 成功但 `budgets` 没更新（漏记账），
-   这种错误在真实系统里极常见，而且只有 `budget_guard` 抓得到。
-
-3. **补元测试**。每加一条不变量，就配一个"手工造违规 → 断言抓得到"的测试，
-   外加一个"正常数据 → 断言不误报"的测试。**没有后者的判定器是废的。**
+- **第 9 类故障**：`pay_out` 成功但 `budgets` 没更新（漏记账）。
+  这种错误在真实系统里很常见，且只有 `budget_guard` 抓得到。
+- **换业务场景**：找一个没有天然幂等键的流程，看"可观测性"结论是否仍然成立。
+- **自动推导状态查询工具**：从工具定义生成配套的"查状态"接口，
+  而不是像本项目这样手工补一个。
 
 ---
 
-## 为什么先做 fake agent，不接 LLM
+## 设计说明：为什么先做 fake agent，不接 LLM
 
 LLM 是不确定源。直接接模型，出怪结果时分不清是 harness 有 bug 还是模型抽风，
 而这两件事的修法完全相反。假 agent 跑两遍必须一模一样（`test_determinism` 就在守这条），
-链路问题一眼暴露，而且不花 API 费。
+链路问题一眼暴露，且不消耗 API 额度。
 
-W2 接真框架时，**先跑这 65 个测试，全绿了再动 LLM**。
+接真模型之前，先让这 65 个测试全绿。
