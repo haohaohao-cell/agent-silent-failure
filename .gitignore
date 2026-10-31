@@ -1,0 +1,19 @@
+# 环境与产物
+.venv/
+.libs/
+.tmp/
+.sandbox/
+runs/
+.env
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+pytest-cache-files-*/
+
+# 编辑器 / 系统
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

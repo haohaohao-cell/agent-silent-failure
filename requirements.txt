@@ -1,0 +1,23 @@
+# 运行测试只需要 pytest；跑实验才需要下面两个框架。
+pytest>=8
+
+# 框架 #1：代码即行动
+smolagents>=1.26,<2
+
+# 框架 #2：显式状态图
+langgraph>=1.0
+
+# 说明
+# ----
+# 模型调用走 src/models.py 里的标准库实现，不依赖 openai SDK；
+# 只有 smolagents 需要它（它会自动带上）。
+#
+# 本机安装时遇到过 pip 依赖解析器死循环，若你也卡住，可以逐个装、禁用解析：
+#     pip install --no-deps smolagents
+#     pip install --no-deps rich markdown-it-py mdurl
+# 这是环境问题，与项目无关（详见 FINDINGS.md 附录）。
+#
+# 跑实验需要 .env（不要提交）：
+#     DEEPSEEK_API_KEY=sk-xxxx
+#     MODEL_ID=deepseek-chat
+#     API_BASE=https://api.deepseek.com/v1
