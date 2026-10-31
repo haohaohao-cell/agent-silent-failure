@@ -1,5 +1,7 @@
 # agent 故障注入与静默失败测量
 
+[![tests](https://github.com/haohaohao-cell/agent-silent-failure/actions/workflows/tests.yml/badge.svg)](https://github.com/haohaohao-cell/agent-silent-failure/actions/workflows/tests.yml)
+
 > 测的不是 agent 能不能做对，而是**它做错的时候知不知道自己错了**。
 
 **当前状态**：65 个测试全绿，六组对照实验已跑完（约 250 次真实模型调用）。
@@ -235,3 +237,12 @@ LLM 是不确定源。直接接模型，出怪结果时分不清是 harness 有 
 链路问题一眼暴露，且不消耗 API 额度。
 
 接真模型之前，先让这 65 个测试全绿。
+
+---
+
+## License
+
+[MIT](LICENSE)
+
+最初的实验计划（"三框架 × 8 故障 × 5 seed"的矩阵）与实际做法有出入，
+作为过程记录保留在 [docs/archive/PLAN-original.md](docs/archive/PLAN-original.md)。
